@@ -134,6 +134,9 @@
 												<f:case value="image">
 													<core:icon identifier="mimetypes-media-image" size="small" />
 												</f:case>
+												<f:case value="inode">
+													<core:icon identifier="mimetypes-text-html" size="small" />
+												</f:case>
 												<f:case value="application">
 													<f:if condition="{mime_Type.1} == 'pdf'">
 														<f:then>
@@ -265,6 +268,10 @@
 
 				.table .download-column {
 					width: 8%;
+				}
+
+				body {
+					overflow-y: auto !important;
 				}
 			</style>
 		</div>

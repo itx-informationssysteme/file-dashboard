@@ -6,6 +6,4 @@
 * Download single files or multiple files together
 
 ## v12 TODO
-* Fix html icon
 * Fix downloads
-* Fix backend not being scrollable
