@@ -93,15 +93,13 @@ class BackendController extends ActionController
             $messageQueue->addMessage($message);
         }
 
-        $this->view->assignMultiple([
-            'files' => $files,
-            'fileTypes' => $fileTypes,
-            'startTime' => $startTime,
-            'endTime' => $endTime,
-            'args' => $arguments,
-        ]);
-        $moduleTemplate->setContent($this->view->render());
-        return $this->htmlResponse($moduleTemplate->renderContent());
+        $moduleTemplate->assign('files', $files);
+        $moduleTemplate->assign('fileTypes', $fileTypes);
+        $moduleTemplate->assign('startTime', $startTime);
+        $moduleTemplate->assign('endTime', $endTime);
+        $moduleTemplate->assign('args', $arguments);
+
+        return $moduleTemplate->renderResponse('List');
     }
 
     // Downloads single file
@@ -211,11 +209,9 @@ class BackendController extends ActionController
             array_push($metaData, $row);
         }
 
-        $this->view->assignMultiple([
-            'file' => $file,
-            'metaData' => $metaData,
-        ]);
-        $moduleTemplate->setContent($this->view->render());
-        return $this->htmlResponse($moduleTemplate->renderContent());
+        $moduleTemplate->assign('file', $file);
+        $moduleTemplate->assign('metaData', $metaData);
+
+        return $moduleTemplate->renderResponse('Detail');
     }
 }
