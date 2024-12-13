@@ -1,7 +1,8 @@
-<html data-namespace-typo3-fluid="true" xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers">
+<html data-namespace-typo3-fluid="true" xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" xmlns:be="http://typo3.org/ns/TYPO3/CMS/Backend/ViewHelpers">
 	<f:layout name="Default" />
 
 	<f:section name="Content">
+		<f:be.pageRenderer includeJsFiles="{0: '{f:uri.resource(path: \'JavaScript/list-script.js\')}'}"></f:be.pageRenderer>
 		<f:flashMessages />
 
 		<h1><f:translate key="files" /></h1>
