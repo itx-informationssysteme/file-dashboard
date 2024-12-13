@@ -1,0 +1,38 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+    Itx\FileDashboard\:
+        resource: '../Classes/*'
+        exclude: '../Classes/Domain/Model/*'
+    cache.file_dashboard_cache:
+        class: TYPO3\CMS\Core\Cache\Frontend\FrontendInterface
+        factory: ['@TYPO3\CMS\Core\Cache\CacheManager', 'getCache']
+        arguments: ['file_dashboard_cache']
+        public: true
+    Itx\FileDashboard\Domain\Repository\FileRepository:
+        arguments:
+            $cache: '@cache.file_dashboard_cache'
+    Itx\FileDashboard\EventListener\FileChangedListener:
+        tags:
+            - name: event.listener
+              identifier: fileAddedListener
+              event: TYPO3\CMS\Core\Resource\Event\AfterFileAddedEvent
+              method: onFileAdded
+            - name: event.listener
+              identifier: fileDeletedListener
+              event: TYPO3\CMS\Core\Resource\Event\AfterFileDeletedEvent
+              method: onFileDeleted
+            - name: event.listener
+              identifier: fileMovedListener
+              event: TYPO3\CMS\Core\Resource\Event\AfterFileMovedEvent
+              method: onFileMoved
+            - name: event.listener
+              identifier: fileRenamedListener
+              event: TYPO3\CMS\Core\Resource\Event\AfterFileRenamedEvent
+              method: onFileRenamed
+            - name: event.listener
+              identifier: fileReplacedListener
+              event: TYPO3\CMS\Core\Resource\Event\AfterFileReplacedEvent
+              method: onFileReplaced

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+    <file source-language="en" datatype="plaintext" original="EXT:file_dashboard/Resources/Private/Language/locallang_mod" date="2019-10-21T16:03:17Z" product-name="file_dashboard">
+        <header/>
+        <body>
+            <trans-unit id="mlang_tabs_tab" resname="mlang_tabs_tab">
+                <source>The cooler Filelist</source>
+                <target>Die coolere Dateiliste</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

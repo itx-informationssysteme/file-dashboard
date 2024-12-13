@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file target-language="de" source="en" datatype="plaintext" original="messages" date="2021-12-02T08:20:20Z" product-name="File-Dashboard">
+		<header/>
+		<body>
+            <trans-unit id="files">
+                <source>Files</source>
+                <target>Dateien</target>
+            </trans-unit>
+            <trans-unit id="name">
+                <source>Name</source>
+                <target>Name</target>
+            </trans-unit>
+            <trans-unit id="path">
+                <source>Path</source>
+                <target>Pfad</target>
+            </trans-unit>
+            <trans-unit id="fileType">
+                <source>File Type</source>
+                <target>Dateityp</target>
+            </trans-unit>
+            <trans-unit id="from">
+                <source>From</source>
+                <target>Von</target>
+            </trans-unit>
+            <trans-unit id="to">
+                <source>To</source>
+                <target>Bis</target>
+            </trans-unit>
+            <trans-unit id="filter">
+                <source>Filter</source>
+                <target>Filtern</target>
+            </trans-unit>
+            <trans-unit id="reset">
+                <source>Reset</source>
+                <target>Zurücksetzen</target>
+            </trans-unit>
+            <trans-unit id="selected">
+                <source>selected</source>
+                <target>ausgewählt</target>
+            </trans-unit>
+            <trans-unit id="results">
+                <source>results</source>
+                <target>Ergebnisse</target>
+            </trans-unit>
+            <trans-unit id="date">
+                <source>Date</source>
+                <target>Datum</target>
+            </trans-unit>
+            <trans-unit id="download">
+                <source>Download</source>
+                <target>Herunterladen</target>
+            </trans-unit>
+            <trans-unit id="back-to-list">
+                <source>Back to list</source>
+                <target>Zurück zur Liste</target>
+            </trans-unit>
+            <trans-unit id="information">
+                <source>Information</source>
+                <target>Information</target>
+            </trans-unit>
+            <trans-unit id="data">
+                <source>Data</source>
+                <target>Daten</target>
+            </trans-unit>
+            <trans-unit id="enter.name">
+                <source>Enter a file name</source>
+                <target>Dateiname eingeben</target>
+            </trans-unit>
+            <trans-unit id="enter.path">
+                <source>Enter a file path</source>
+                <target>Dateipfad eingeben</target>
+            </trans-unit>
+        </body>
+	</file>
+</xliff>

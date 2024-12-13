@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2021-12-02T08:20:20Z" product-name="File-Dashboard">
+		<header/>
+		<body>
+            <trans-unit id="files">
+                <source>Files</source>
+            </trans-unit>
+            <trans-unit id="name">
+                <source>Name</source>
+            </trans-unit>
+            <trans-unit id="path">
+                <source>Path</source>
+            </trans-unit>
+            <trans-unit id="fileType">
+                <source>File Type</source>
+            </trans-unit>
+            <trans-unit id="from">
+                <source>From</source>
+            </trans-unit>
+            <trans-unit id="to">
+                <source>To</source>
+            </trans-unit>
+            <trans-unit id="filter">
+                <source>Filter</source>
+            </trans-unit>
+            <trans-unit id="reset">
+                <source>Reset</source>
+            </trans-unit>
+            <trans-unit id="selected">
+                <source>selected</source>
+            </trans-unit>
+            <trans-unit id="results">
+                <source>results</source>
+            </trans-unit>
+            <trans-unit id="date">
+                <source>Date</source>
+            </trans-unit>
+            <trans-unit id="download">
+                <source>Download</source>
+            </trans-unit>
+            <trans-unit id="back-to-list">
+                <source>Back to list</source>
+            </trans-unit>
+            <trans-unit id="information">
+                <source>Information</source>
+            </trans-unit>
+            <trans-unit id="data">
+                <source>Data</source>
+            </trans-unit>
+            <trans-unit id="enter.name">
+                <source>Enter a file name</source>
+            </trans-unit>
+            <trans-unit id="enter.path">
+                <source>Enter a file path</source>
+            </trans-unit>
+        </body>
+	</file>
+</xliff>

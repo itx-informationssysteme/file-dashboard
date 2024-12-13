@@ -1,0 +1,32 @@
+<html data-namespace-typo3-fluid="true" xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers">
+	<f:layout name="Default" />
+
+	<f:section name="Content">
+		<f:flashMessages />
+
+		<f:link.action action="list" class="btn btn-primary">
+			<f:translate key="back-to-list" />
+		</f:link.action>
+		<h1 class="pt-5">{file.name}</h1>
+		<f:image src="{file.uid}" alt="{metaData.alternative}" />
+
+		<div class="panel panel-default">
+			<table class="table-striped table-hover table">
+				<thead>
+					<tr>
+						<th><f:translate key="information" /></th>
+						<th><f:translate key="data" /></th>
+					</tr>
+				</thead>
+				<tbody>
+					<f:for each="{metaData.0}" as="data" key="label">
+						<tr>
+							<td>{label}</td>
+							<td>{data}</td>
+						</tr>
+					</f:for>
+				</tbody>
+			</table>
+		</div>
+	</f:section>
+</html>
