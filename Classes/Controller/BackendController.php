@@ -13,6 +13,7 @@ use TYPO3\CMS\Core\Http\Response;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessageService;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
+use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use ZipStream\ZipStream;
@@ -44,7 +45,7 @@ class BackendController extends ActionController
                 FlashMessage::class,
                 'Please set both start and end date',
                 'Datetime Warning',
-                FlashMessage::WARNING,
+                ContextualFeedbackSeverity::WARNING,
                 true
             );
         } elseif ((isset($arguments['dateStart']) && isset($arguments['dateStop']))) {
@@ -53,7 +54,7 @@ class BackendController extends ActionController
                     FlashMessage::class,
                     'The start date is after the end date',
                     'Datetime Warning',
-                    FlashMessage::WARNING,
+                    ContextualFeedbackSeverity::WARNING,
                     true
                 );
             } elseif ($arguments['dateStart'] == '' || $arguments['dateStop'] == '') {
@@ -61,7 +62,7 @@ class BackendController extends ActionController
                     FlashMessage::class,
                     'Please set both start and end date',
                     'Datetime Warning',
-                    FlashMessage::WARNING,
+                    ContextualFeedbackSeverity::WARNING,
                     true
                 );
             } else {
@@ -123,7 +124,7 @@ class BackendController extends ActionController
                 FlashMessage::class,
                 "File $name doesn't exist",
                 'File Error',
-                FlashMessage::ERROR,
+                ContextualFeedbackSeverity::ERROR,
                 true
             );
         }
