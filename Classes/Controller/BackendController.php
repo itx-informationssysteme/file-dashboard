@@ -10,11 +10,8 @@ use Psr\Http\Message\ResponseInterface;
 use RuntimeException;
 use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
 use TYPO3\CMS\Core\Http\Response;
-use TYPO3\CMS\Core\Messaging\FlashMessage;
-use TYPO3\CMS\Core\Messaging\FlashMessageService;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use ZipStream\ZipStream;
 
@@ -142,8 +139,6 @@ class BackendController extends ActionController
         $response->getBody()->write(file_get_contents($absolutePath));
 
         return $response;
-
-        
     }
 
     // Archives multiple files into .zip file and then starts download
