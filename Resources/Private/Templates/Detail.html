@@ -4,29 +4,36 @@
 	<f:section name="Content">
 		<f:flashMessages />
 
-		<f:link.action action="list" class="btn btn-primary">
-			<f:translate key="back-to-list" />
-		</f:link.action>
-		<h1 class="pt-5">{file.name}</h1>
-		<f:image src="{file.uid}" alt="{metaData.alternative}" />
+		<div class="module-body t3js-module-body">
+			<f:be.pageRenderer includeCssFiles="{0: '{f:uri.resource(path: \'CSS/main.css\')}'}"> </f:be.pageRenderer>
+			<f:link.action action="list" class="btn btn-primary">
+				<f:translate key="back-to-list" />
+			</f:link.action>
+			<h1 class="pt-5">{file.name}</h1>
+			<f:image src="{file.uid}" alt="{metaData.alternative}" />
 
-		<div class="panel panel-default">
-			<table class="table-striped table-hover table">
-				<thead>
-					<tr>
-						<th><f:translate key="information" /></th>
-						<th><f:translate key="data" /></th>
-					</tr>
-				</thead>
-				<tbody>
-					<f:for each="{metaData.0}" as="data" key="label">
+			<div class="panel panel-default">
+				<table class="table-striped table-hover table">
+					<thead>
 						<tr>
-							<td>{label}</td>
-							<td>{data}</td>
+							<th>
+								<f:translate key="information" />
+							</th>
+							<th>
+								<f:translate key="data" />
+							</th>
 						</tr>
-					</f:for>
-				</tbody>
-			</table>
+					</thead>
+					<tbody>
+						<f:for each="{metaData.0}" as="data" key="label">
+							<tr>
+								<td>{label}</td>
+								<td>{data}</td>
+							</tr>
+						</f:for>
+					</tbody>
+				</table>
+			</div>
 		</div>
 	</f:section>
 </html>
