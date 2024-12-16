@@ -1,0 +1,61 @@
+.pointer {
+	cursor: pointer !important;
+}
+
+.important-flex {
+	display: flex !important;
+}
+
+.panel-default {
+	border: 1px solid #ddd;
+	border-radius: 4px;
+}
+
+.table-fit {
+	max-width: 100%;
+}
+
+.table {
+	table-layout: fixed;
+	width: 100%;
+	max-width: 100%;
+}
+
+.table th {
+	text-align: left;
+}
+
+.table .text-right {
+	text-align: right;
+}
+
+.table .checkbox-column {
+	width: 2%;
+}
+
+.table .name-column {
+	width: 35%;
+}
+
+.table .path-column {
+	width: 35%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.table .filetype-column {
+	width: 10%;
+}
+
+.table .date-column {
+	width: 10%;
+}
+
+.table .download-column {
+	width: 8%;
+}
+
+body {
+	overflow-y: auto !important;
+}

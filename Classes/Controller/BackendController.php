@@ -10,10 +10,8 @@ use Psr\Http\Message\ResponseInterface;
 use RuntimeException;
 use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
 use TYPO3\CMS\Core\Http\Response;
-use TYPO3\CMS\Core\Messaging\FlashMessage;
-use TYPO3\CMS\Core\Messaging\FlashMessageService;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use ZipStream\ZipStream;
 
@@ -40,28 +38,25 @@ class BackendController extends ActionController
         $endTime = new DateTime();
 
         if (isset($arguments['dateStart']) xor isset($arguments['dateStop'])) {
-            $message = GeneralUtility::makeInstance(
-                FlashMessage::class,
+            $this->addFlashMessage(
                 'Please set both start and end date',
                 'Datetime Warning',
-                FlashMessage::WARNING,
+                ContextualFeedbackSeverity::WARNING,
                 true
             );
         } elseif ((isset($arguments['dateStart']) && isset($arguments['dateStop']))) {
             if (($arguments['dateStart'] > $arguments['dateStop'])) {
-                $message = GeneralUtility::makeInstance(
-                    FlashMessage::class,
+                $this->addFlashMessage(
                     'The start date is after the end date',
                     'Datetime Warning',
-                    FlashMessage::WARNING,
+                    ContextualFeedbackSeverity::WARNING,
                     true
                 );
             } elseif ($arguments['dateStart'] == '' || $arguments['dateStop'] == '') {
-                $message = GeneralUtility::makeInstance(
-                    FlashMessage::class,
+                $this->addFlashMessage(
                     'Please set both start and end date',
                     'Datetime Warning',
-                    FlashMessage::WARNING,
+                    ContextualFeedbackSeverity::WARNING,
                     true
                 );
             } else {
@@ -86,21 +81,13 @@ class BackendController extends ActionController
             $endTime = $arguments['dateStop'];
         }
 
-        if (isset($message)) {
-            $flashMessageService = GeneralUtility::makeInstance(FlashMessageService::class);
-            $messageQueue = $flashMessageService->getMessageQueueByIdentifier();
-            $messageQueue->addMessage($message);
-        }
+        $moduleTemplate->assign('files', $files);
+        $moduleTemplate->assign('fileTypes', $fileTypes);
+        $moduleTemplate->assign('startTime', $startTime);
+        $moduleTemplate->assign('endTime', $endTime);
+        $moduleTemplate->assign('args', $arguments);
 
-        $this->view->assignMultiple([
-            'files' => $files,
-            'fileTypes' => $fileTypes,
-            'startTime' => $startTime,
-            'endTime' => $endTime,
-            'args' => $arguments,
-        ]);
-        $moduleTemplate->setContent($this->view->render());
-        return $this->htmlResponse($moduleTemplate->renderContent());
+        return $moduleTemplate->renderResponse('List');
     }
 
     // Downloads single file
@@ -115,17 +102,21 @@ class BackendController extends ActionController
             throw new RuntimeException($e);
         }
 
-        $absolutePath = $data->getForLocalProcessing();
+        try {
+            $absolutePath = $data->getForLocalProcessing();
+        } catch (Exception $e) {
+            $absolutePath = '';
+        }
 
         if (!file_exists($absolutePath)) {
             $name = $file['name'];
-            $message = GeneralUtility::makeInstance(
-                FlashMessage::class,
+            $this->addFlashMessage(
                 "File $name doesn't exist",
                 'File Error',
-                FlashMessage::ERROR,
+                ContextualFeedbackSeverity::ERROR,
                 true
             );
+            return $this->redirect('list');
         }
 
         $event = $this->eventDispatcher->dispatch(
@@ -145,16 +136,9 @@ class BackendController extends ActionController
             ->withHeader('Pragma', 'public')
             ->withHeader('Content-Length', (string)filesize($absolutePath));
 
-        if (isset($message)) {
-            $flashMessageService = GeneralUtility::makeInstance(FlashMessageService::class);
-            $messageQueue = $flashMessageService->getMessageQueueByIdentifier();
-            $messageQueue->addMessage($message);
-        } else {
-            $response->getBody()->write(file_get_contents($absolutePath));
+        $response->getBody()->write(file_get_contents($absolutePath));
 
-            return $response;
-        }
-        return $this->redirect('list');
+        return $response;
     }
 
     // Archives multiple files into .zip file and then starts download
@@ -180,7 +164,11 @@ class BackendController extends ActionController
                 continue;
             }
 
-            $absolutePath = $file->getForLocalProcessing();
+            try {
+                $absolutePath = $file->getForLocalProcessing();
+            } catch (Exception $e) {
+                $absolutePath = '';
+            }
             $fileName = $file->getName();
 
             if (!file_exists($absolutePath)) {
@@ -210,11 +198,9 @@ class BackendController extends ActionController
             array_push($metaData, $row);
         }
 
-        $this->view->assignMultiple([
-            'file' => $file,
-            'metaData' => $metaData,
-        ]);
-        $moduleTemplate->setContent($this->view->render());
-        return $this->htmlResponse($moduleTemplate->renderContent());
+        $moduleTemplate->assign('file', $file);
+        $moduleTemplate->assign('metaData', $metaData);
+
+        return $moduleTemplate->renderResponse('Detail');
     }
 }
