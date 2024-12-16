@@ -7,6 +7,7 @@
 	<f:section name="Content">
 		<div class="module-body t3js-module-body">
 			<f:be.pageRenderer includeJsFiles="{0: '{f:uri.resource(path: \'JavaScript/list-script.js\')}'}"> </f:be.pageRenderer>
+			<f:be.pageRenderer includeCssFiles="{0: '{f:uri.resource(path: \'CSS/main.css\')}'}"> </f:be.pageRenderer>
 			<f:flashMessages />
 
 			<h1>
@@ -208,72 +209,6 @@
 					<f:form.submit id="download_submit" hidden="true" action="multiDownload" />
 				</div>
 			</f:form>
-
-			<!-- ----------------------------------------------- JavaScript ------------------------------------ -->
-
-			<style>
-				.pointer {
-					cursor: pointer !important;
-				}
-
-				.important-flex {
-					display: flex !important;
-				}
-
-				.panel-default {
-					border: 1px solid #ddd;
-					border-radius: 4px;
-				}
-
-				.table-fit {
-					max-width: 100%;
-				}
-
-				.table {
-					table-layout: fixed;
-					width: 100%;
-					max-width: 100%;
-				}
-
-				.table th {
-					text-align: left;
-				}
-
-				.table .text-right {
-					text-align: right;
-				}
-
-				.table .checkbox-column {
-					width: 2%;
-				}
-
-				.table .name-column {
-					width: 35%;
-				}
-
-				.table .path-column {
-					width: 35%;
-					overflow: hidden;
-					text-overflow: ellipsis;
-					white-space: nowrap;
-				}
-
-				.table .filetype-column {
-					width: 10%;
-				}
-
-				.table .date-column {
-					width: 10%;
-				}
-
-				.table .download-column {
-					width: 8%;
-				}
-
-				body {
-					overflow-y: auto !important;
-				}
-			</style>
 		</div>
 	</f:section>
 </html>
