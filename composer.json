@@ -1,6 +1,6 @@
 {
 	"name": "itx/file-dashboard",
-	"description": "it.x File Dashboard",
+	"description": "Filterable file list backend module including easy download functionality.",
 	"type": "typo3-cms-extension",
 	"license": [
 		"GPL-2.0-or-later"
