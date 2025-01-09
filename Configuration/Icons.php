@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-use TYPO3\CMS\Core\Imaging\IconProvider\BitmapIconProvider;
+use TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider;
 
 return [
     'cooler-filelist' => [
-        'provider' => BitmapIconProvider::class,
+        'provider' => SvgIconProvider::class,
         // The source bitmap file
-        'source' => 'EXT:file_dashboard/Resources/Public/Icons/Extension.png',
+        'source' => 'EXT:file_dashboard/Resources/Public/Icons/Extension.svg',
         // All icon providers provide the possibility to register an icon that spins
-        'spinning' => true,
+        'spinning' => false,
     ],
 ];

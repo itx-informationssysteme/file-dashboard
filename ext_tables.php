@@ -14,7 +14,7 @@ call_user_func(
             ],
             [
                 'access' => 'user,group',
-                'iconIdentifier' => 'cooler-filelist',
+                'iconIdentifier' => 'module-version',
                 'labels' => 'LLL:EXT:file_dashboard/Resources/Private/Language/locallang_backend.xlf',
                 'navigationComponentId' => '',
                 'inheritNavigationComponentFromMainModule' => false,
