@@ -4,8 +4,8 @@
         <header/>
         <body>
             <trans-unit id="mlang_tabs_tab" resname="mlang_tabs_tab">
-                <source>The cooler Filelist</source>
-                <target>Die coolere Dateiliste</target>
+                <source>File Dashboard</source>
+                <target>Datei Dashboard</target>
             </trans-unit>
         </body>
     </file>
