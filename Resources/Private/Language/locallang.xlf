@@ -54,6 +54,9 @@
             <trans-unit id="enter.path">
                 <source>Enter a file path</source>
             </trans-unit>
+            <trans-unit id="enter.maximumListItems">
+                <source>Enter how many items the list should contain at max before paginating (default is no pagination)</source>
+            </trans-unit>
         </body>
 	</file>
 </xliff>
