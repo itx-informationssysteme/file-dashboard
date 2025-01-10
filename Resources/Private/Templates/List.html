@@ -306,7 +306,7 @@
 				<!-- ---------------------------------------------- Pagination -------------------------------- -->
 
 				<ul class="pagination">
-					<li class="page-item">
+					<li class="page-item {f:if(condition: '{paginator.currentPageNumber} === {pagination.firstPageNumber}', then: 'disabled')}">
 						<f:link.action
 							arguments="{currentPageNumber: '1', name:args.name, path:args.path, fileType:args.fileType, dateStart:startTime, dateStop:endTime}"
 							class="page-link {f:if(condition:'{currentPageNumber}=={page}',then:'active')}"
@@ -314,7 +314,7 @@
 							<core:icon identifier="actions-view-paging-first" />
 						</f:link.action>
 					</li>
-					<li class="page-item">
+					<li class="page-item {f:if(condition: '{paginator.currentPageNumber} === {pagination.firstPageNumber}', then: 'disabled')}">
 						<f:link.action
 							arguments="{currentPageNumber:decrementedPageNumber, name:args.name, path:args.path, fileType:args.fileType, dateStart:startTime, dateStop:endTime}"
 							class="page-link {f:if(condition:'{currentPageNumber}=={page}',then:'active')}"
@@ -326,13 +326,13 @@
 						<li class="page-item">
 							<f:link.action
 							arguments="{currentPageNumber:page, name:args.name, path:args.path, fileType:args.fileType, dateStart:startTime, dateStop:endTime}"
-							class="page-link {f:if(condition:'{currentPageNumber}=={page}',then:'active')}"
+							class="page-link {f:if(condition:'{paginator.currentPageNumber}=={page}',then:'active')}"
 							>
 								{page}
 							</f:link.action>
 						</li>
 					</f:for>
-					<li class="page-item">
+					<li class="page-item {f:if(condition: '{paginator.currentPageNumber} === {pagination.lastPageNumber}', then: 'disabled')}">
 						<f:link.action
 							arguments="{currentPageNumber:incrementedPageNumber, name:args.name, path:args.path, fileType:args.fileType, dateStart:startTime, dateStop:endTime}"
 							class="page-link {f:if(condition:'{currentPageNumber}=={page}',then:'active')}"
@@ -340,7 +340,7 @@
 							<core:icon identifier="actions-view-paging-next" />
 						</f:link.action>
 					</li>
-					<li class="page-item">
+					<li class="page-item {f:if(condition: '{paginator.currentPageNumber} === {pagination.lastPageNumber}', then: 'disabled')}">
 						<f:link.action
 							arguments="{currentPageNumber:numberOfPages, name:args.name, path:args.path, fileType:args.fileType, dateStart:startTime, dateStop:endTime}"
 							class="page-link {f:if(condition:'{currentPageNumber}=={page}',then:'active')}"
