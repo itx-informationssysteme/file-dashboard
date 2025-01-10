@@ -1,12 +1,20 @@
-<html data-namespace-typo3-fluid="true" xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers">
+<html
+	data-namespace-typo3-fluid="true"
+	xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+	xmlns:be="http://typo3.org/ns/TYPO3/CMS/Backend/ViewHelpers">
 	<f:layout name="Default" />
 
 	<f:section name="Content">
-		<f:flashMessages />
+		<div class="module-body t3js-module-body">
+			<f:be.pageRenderer includeJsFiles="{0: '{f:uri.resource(path: \'JavaScript/list-script.js\')}'}"> </f:be.pageRenderer>
+			<f:be.pageRenderer includeCssFiles="{0: '{f:uri.resource(path: \'CSS/main.css\')}'}"> </f:be.pageRenderer>
+			<f:flashMessages />
 
-		<h1><f:translate key="files" /></h1>
+			<h1>
+				<f:translate key="files" />
+			</h1>
 
-		<!-- ------------------------------------------ Filter --------------------------------------------------->
+			<!-- ------------------------------------------ Filter --------------------------------------------------->
 
 			<f:form name="filter" action="list">
 				<div class="row row-cols-auto align-items-end g-3">
@@ -83,142 +91,36 @@
 						</p>
 					</div>
 				</div>
-				<div class="col">
-					<label for="path" class="form-label"><f:translate key="path" /></label>
-					<f:form.textfield
-						class="form-control"
-						name="path"
-						value="{args.path}"
-						placeholder="{f:translate(key: 'enter.path')}" />
-				</div>
-				<div class="col">
-					<label for="fileType" class="form-label"><f:translate key="fileType" /></label>
-					<f:form.select name="fileType" class="form-select" id="fileType" value="{args.fileType}">
-						<f:for each="{fileTypes}" as="fileType">
-							<f:form.select.option value="{fileType}">{fileType}</f:form.select.option>
-						</f:for>
-					</f:form.select>
-				</div>
-				<div class="col">
-					<label for="dateStart" class="form-label"><f:translate key="from" /></label>
-					<f:form.textfield
-						class="form-control"
-						name="dateStart"
-						value="{startTime}"
-						placeholder="Enter start date"
-						type="datetime-local" />
-				</div>
-				<div class="col">
-					<label for="dateStop" class="form-label"><f:translate key="to" /></label>
-					<f:form.textfield
-						class="form-control"
-						name="dateStop"
-						value="{endTime}"
-						placeholder="Enter end date"
-						type="datetime-local" />
-				</div>
-				<div class="col">
-					<f:form.submit class="btn btn-primary" value="{f:translate(key: 'filter')}" />
-					<f:link.action class="btn btn-link" action="list"><f:translate key="reset" /></f:link.action>
-				</div>
-				<div class="col important-flex ms-auto">
-					<p id="selectedCount" class="btm-default form-label p-2">0 <f:translate key="selected" /></p>
-					<p class="btm-default form-label p-2"><f:count>{files}</f:count> <f:translate key="results" /></p>
-				</div>
-			</div>
-		</f:form>
-		<br />
+			</f:form>
+			<br />
 
-		<!-- ------------------------------------------ Table --------------------------------------------------->
+			<!-- ------------------------------------------ Table --------------------------------------------------->
 
-		<f:form name="download" id="download" action="multiDownload">
-			<f:form.hidden name="downloadCheckboxJson" id="downloadCheckboxJson" value="" />
-			<div class="panel panel-default">
-				<div class="table-fit">
-					<table class="table-striped table-hover table">
-						<thead>
-							<tr>
-								<th class="checkbox-column">
-									<f:form.checkbox id="checkAll" name="checkAll" value="" />
-								</th>
-								<th class="name-column"><f:translate key="name" /></th>
-								<th class="path-column"><f:translate key="path" /></th>
-								<th class="filetype-column"><f:translate key="fileType" /></th>
-								<th class="date-column"><f:translate key="date" /></th>
-								<th class="download-column text-right"><f:translate key="download" /></th>
-							</tr>
-						</thead>
-						<tbody>
-							<f:for each="{files}" as="file">
+			<f:form name="download" id="download" action="multiDownload">
+				<f:form.hidden name="downloadCheckboxJson" id="downloadCheckboxJson" value="" />
+				<div class="panel panel-default">
+					<div class="table-fit">
+						<table class="table-striped table-hover table">
+							<thead>
 								<tr>
-									<td class="checkbox-column">
-										<input
-											type="checkbox"
-											class="form-check-input download-checkbox"
-											id="{file.uid}"
-											value="{file.identifier}" />
-									</td>
-									<td class="name-column">
-										<f:variable name="mime_Type" value="{file.mime_type -> f:split(separator: '/')}" />
-										<f:switch expression="{mime_Type.0}">
-											<f:case value="image">
-												<core:icon identifier="mimetypes-media-image" size="small" />
-											</f:case>
-											<f:case value="application">
-												<f:if condition="{mime_Type.1} == 'pdf'">
-													<f:then>
-														<core:icon identifier="mimetypes-pdf" size="small" />
-													</f:then>
-													<f:else if="{mime_Type.1} == 'x-empty'">
-														<core:icon identifier="mimetypes-text-html" size="small" />
-													</f:else>
-												</f:if>
-											</f:case>
-											<f:case value="video">
-												<f:if condition="{mime_Type.1} == 'youtube'">
-													<f:then>
-														<core:icon identifier="mimetypes-media-video-youtube" size="small" />
-													</f:then>
-													<f:else if="{mime_Type.1} == 'vimeo'">
-														<core:icon identifier="mimetypes-media-video-vimeo" size="small" />
-													</f:else>
-													<f:else>
-														<core:icon identifier="mimetypes-media-video" size="small" />
-													</f:else>
-												</f:if>
-											</f:case>
-											<f:case value="audio">
-												<core:icon identifier="mimetypes-media-audio" size="small" />
-											</f:case>
-											<f:case value="text">
-												<f:if condition="{file.extension} == 'yaml'}">
-													<f:then>
-														<core:icon identifier="mimetypes-application" size="small" />
-													</f:then>
-													<f:else if="{mime_Type.1} == 'xml'">
-														<core:icon identifier="mimetypes-excel" size="small" />
-													</f:else>
-													<f:else if="{file.extension} == 'json'">
-														<core:icon identifier="mimetypes-text-js" size="small" />
-													</f:else>
-													<f:else>
-														<core:icon identifier="mimetypes-text-text" size="small" />
-													</f:else>
-												</f:if>
-											</f:case>
-										</f:switch>
-										<f:link.action action="detail" arguments="{'file': file}">{file.name} </f:link.action>
-									</td>
-									<td class="path-column">{file.identifier}</td>
-									<td class="filetype-column">{file.extension}</td>
-									<td class="date-column">
-										<f:format.date format="d.m.Y H:i">{file.creation_date}</f:format.date>
-									</td>
-									<td class="download-column text-right">
-										<f:link.action class="btn btn-default" arguments="{'file': file}" action="download">
-											Download
-										</f:link.action>
-									</td>
+									<th class="checkbox-column">
+										<f:form.checkbox id="checkAll" name="checkAll" value="" />
+									</th>
+									<th class="name-column">
+										<f:translate key="name" />
+									</th>
+									<th class="path-column">
+										<f:translate key="path" />
+									</th>
+									<th class="filetype-column">
+										<f:translate key="fileType" />
+									</th>
+									<th class="date-column">
+										<f:translate key="date" />
+									</th>
+									<th class="download-column text-right">
+										<f:translate key="download" />
+									</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -301,7 +203,6 @@
 						</table>
 					</div>
 				</div>
-			</div>
 
 				<!-- ---------------------------------------------- Pagination -------------------------------- -->
 
@@ -309,7 +210,7 @@
 					<li class="page-item {f:if(condition: '{paginator.currentPageNumber} === {pagination.firstPageNumber}', then: 'disabled')}">
 						<f:link.action
 							arguments="{currentPageNumber: '1', name:args.name, path:args.path, fileType:args.fileType, dateStart:startTime, dateStop:endTime}"
-							class="page-link {f:if(condition:'{currentPageNumber}=={page}',then:'active')}"
+							class="page-link"
 						>
 							<core:icon identifier="actions-view-paging-first" />
 						</f:link.action>
@@ -317,7 +218,7 @@
 					<li class="page-item {f:if(condition: '{paginator.currentPageNumber} === {pagination.firstPageNumber}', then: 'disabled')}">
 						<f:link.action
 							arguments="{currentPageNumber:decrementedPageNumber, name:args.name, path:args.path, fileType:args.fileType, dateStart:startTime, dateStop:endTime}"
-							class="page-link {f:if(condition:'{currentPageNumber}=={page}',then:'active')}"
+							class="page-link"
 						>
 							<core:icon identifier="actions-view-paging-previous" />
 						</f:link.action>
@@ -335,7 +236,7 @@
 					<li class="page-item {f:if(condition: '{paginator.currentPageNumber} === {pagination.lastPageNumber}', then: 'disabled')}">
 						<f:link.action
 							arguments="{currentPageNumber:incrementedPageNumber, name:args.name, path:args.path, fileType:args.fileType, dateStart:startTime, dateStop:endTime}"
-							class="page-link {f:if(condition:'{currentPageNumber}=={page}',then:'active')}"
+							class="page-link"
 						>
 							<core:icon identifier="actions-view-paging-next" />
 						</f:link.action>
@@ -343,7 +244,7 @@
 					<li class="page-item {f:if(condition: '{paginator.currentPageNumber} === {pagination.lastPageNumber}', then: 'disabled')}">
 						<f:link.action
 							arguments="{currentPageNumber:numberOfPages, name:args.name, path:args.path, fileType:args.fileType, dateStart:startTime, dateStop:endTime}"
-							class="page-link {f:if(condition:'{currentPageNumber}=={page}',then:'active')}"
+							class="page-link"
 						>
 							<core:icon identifier="actions-view-paging-last" />
 						</f:link.action>
@@ -352,140 +253,13 @@
 
 				<!-- ----------------------------------------- Floating Action Button ------------------------- -->
 
-			<div id="fab" class="position-fixed btn btn-default disabled bottom-0 end-0 m-5">
-				<label for="download_submit" class="pointer">
-					<core:icon identifier="actions-download" size="large" />
-				</label>
-				<f:form.submit id="download_submit" hidden="true" action="multiDownload" />
-			</div>
-		</f:form>
-
-		<!-- ----------------------------------------------- JavaScript ------------------------------------ -->
-
-		<script>
-			document.addEventListener('DOMContentLoaded', function () {
-				const checkAll = document.getElementById('checkAll')
-				const checkboxes = document.querySelectorAll('.download-checkbox')
-				const fab = document.getElementById('fab')
-				const form = document.getElementById('download')
-				const jsonInput = document.getElementById('downloadCheckboxJson')
-
-				//Checkbox handler
-				const handleCheckAllChange = () => {
-					checkboxes.forEach(checkbox => {
-						checkbox.checked = checkAll.checked
-					})
-					updateFabClass()
-					updateSelectedCount()
-				}
-
-				const updateFabClass = () => {
-					const anyChecked = Array.from(checkboxes).some(checkbox => checkbox.checked)
-					const allChecked = Array.from(checkboxes).every(checkbox => checkbox.checked)
-
-					if (anyChecked) {
-						fab.className = 'position-fixed btn btn-primary bottom-0 end-0 m-5'
-					} else {
-						fab.className = 'position-fixed btn btn-default disabled bottom-0 end-0 m-5'
-					}
-
-					// Update "Check All" state
-					if (allChecked) {
-						checkAll.checked = true
-					} else if (!anyChecked) {
-						checkAll.checked = false
-					}
-				}
-
-				checkAll.addEventListener('change', handleCheckAllChange)
-				checkboxes.forEach(checkbox => {
-					checkbox.addEventListener('change', () => {
-						updateFabClass()
-						updateSelectedCount()
-					})
-				})
-
-				// Form submission manipulator
-				form.addEventListener('submit', function (event) {
-					event.preventDefault()
-
-					const selectedValues = Array.from(checkboxes)
-						.filter(checkbox => checkbox.checked)
-						.reduce((acc, checkbox) => {
-							acc[checkbox.id] = checkbox.value
-							return acc
-						}, {})
-
-					jsonInput.value = JSON.stringify(selectedValues)
-
-					form.submit()
-				})
-
-				const updateSelectedCount = () => {
-					const count = Array.from(checkboxes).filter(checkbox => checkbox.checked).length
-					selectedCount.textContent = `${count} selected`
-				}
-			})
-		</script>
-
-		<style>
-			.pointer {
-				cursor: pointer !important;
-			}
-
-			.important-flex {
-				display: flex !important;
-			}
-
-			.panel-default {
-				border: 1px solid #ddd;
-				border-radius: 4px;
-			}
-
-			.table-fit {
-				max-width: 100%;
-			}
-
-			.table {
-				table-layout: fixed;
-				width: 100%;
-				max-width: 100%;
-			}
-
-			.table th {
-				text-align: left;
-			}
-
-			.table .text-right {
-				text-align: right;
-			}
-
-			.table .checkbox-column {
-				width: 2%;
-			}
-
-			.table .name-column {
-				width: 35%;
-			}
-
-			.table .path-column {
-				width: 35%;
-				overflow: hidden;
-				text-overflow: ellipsis;
-				white-space: nowrap;
-			}
-
-			.table .filetype-column {
-				width: 10%;
-			}
-
-			.table .date-column {
-				width: 10%;
-			}
-
-			.table .download-column {
-				width: 8%;
-			}
-		</style>
+				<div id="fab" class="position-fixed btn btn-default disabled bottom-0 end-0 m-5">
+					<label for="download_submit" class="pointer">
+						<core:icon identifier="actions-download" size="large" />
+					</label>
+					<f:form.submit id="download_submit" hidden="true" action="multiDownload" />
+				</div>
+			</f:form>
+		</div>
 	</f:section>
 </html>

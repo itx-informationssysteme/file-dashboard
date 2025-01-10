@@ -106,9 +106,10 @@ class BackendController extends ActionController
         $this->view->assignMultiple([
             'totalFiles' => count($files),
             'itemsPerPage' => $itemsPerPage,
-            'page', $page,
+            'page' => $page,
             'incrementedPageNumber' => $incrementedPageNumber,
             'decrementedPageNumber' => $decrementedPageNumber,
+            'numberOfPages' => $paginator->getNumberOfPages(),
             'paginator' => $paginator,
             'pagination' => $pagination,
             'fileTypes' => $fileTypes,
