@@ -12,9 +12,12 @@ use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
 use TYPO3\CMS\Core\Http\Response;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessageService;
+use TYPO3\CMS\Core\Pagination\ArrayPaginator;
+use TYPO3\CMS\Core\Pagination\SimplePagination;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use ZipStream\ZipStream;
 
 class BackendController extends ActionController
@@ -42,8 +45,8 @@ class BackendController extends ActionController
         if (isset($arguments['dateStart']) xor isset($arguments['dateStop'])) {
             $message = GeneralUtility::makeInstance(
                 FlashMessage::class,
-                'Please set both start and end date',
-                'Datetime Warning',
+                LocalizationUtility::translate('LLL:EXT:file_dashboard/Resources/Private/Language/locallang.xlf:warning.setBoth'),
+                LocalizationUtility::translate('LLL:EXT:file_dashboard/Resources/Private/Language/locallang.xlf:warning.dateTime'),,
                 FlashMessage::WARNING,
                 true
             );
@@ -51,16 +54,16 @@ class BackendController extends ActionController
             if (($arguments['dateStart'] > $arguments['dateStop'])) {
                 $message = GeneralUtility::makeInstance(
                     FlashMessage::class,
-                    'The start date is after the end date',
-                    'Datetime Warning',
+                    LocalizationUtility::translate('LLL:EXT:file_dashboard/Resources/Private/Language/locallang.xlf:warning.startAfterEnd'),
+                    LocalizationUtility::translate('LLL:EXT:file_dashboard/Resources/Private/Language/locallang.xlf:warning.dateTime'),
                     FlashMessage::WARNING,
                     true
                 );
             } elseif ($arguments['dateStart'] == '' || $arguments['dateStop'] == '') {
                 $message = GeneralUtility::makeInstance(
                     FlashMessage::class,
-                    'Please set both start and end date',
-                    'Datetime Warning',
+                    LocalizationUtility::translate('LLL:EXT:file_dashboard/Resources/Private/Language/locallang.xlf:warning.setBoth'),
+                    LocalizationUtility::translate('LLL:EXT:file_dashboard/Resources/Private/Language/locallang.xlf:warning.dateTime'),
                     FlashMessage::WARNING,
                     true
                 );
@@ -75,6 +78,14 @@ class BackendController extends ActionController
         $earliestDate = $result['earliestDate'];
         $latestDate = $result['latestDate'];
         $fileTypes = $result['fileTypes'];
+
+        $maxListItems = $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['file_dashboard']['maximumListItems'];
+        $itemsPerPage = $maxListItems != '' && $maxListItems != null && $maxListItems != 0 ? abs($maxListItems) : count($files);
+        $page = $this->request->hasArgument('currentPageNumber') ? (int)$arguments['currentPageNumber'] : 1;
+        $paginator = new ArrayPaginator($files, $page, $itemsPerPage);
+        $pagination = new SimplePagination($paginator);
+        $incrementedPageNumber = $page >= $paginator->getNumberOfPages() ? $page : $page + 1;
+        $decrementedPageNumber = $page <= 1 ? $page : $page -1;
 
         if (!array_key_exists('name', $arguments)) {
             $startTime->setTimestamp($earliestDate);
@@ -93,7 +104,13 @@ class BackendController extends ActionController
         }
 
         $this->view->assignMultiple([
-            'files' => $files,
+            'totalFiles' => count($files),
+            'itemsPerPage' => $itemsPerPage,
+            'page', $page,
+            'incrementedPageNumber' => $incrementedPageNumber,
+            'decrementedPageNumber' => $decrementedPageNumber,
+            'paginator' => $paginator,
+            'pagination' => $pagination,
             'fileTypes' => $fileTypes,
             'startTime' => $startTime,
             'endTime' => $endTime,

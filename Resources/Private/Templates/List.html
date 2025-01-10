@@ -8,15 +8,80 @@
 
 		<!-- ------------------------------------------ Filter --------------------------------------------------->
 
-		<f:form name="filter" action="list">
-			<div class="row row-cols-auto align-items-end g-3">
-				<div class="col">
-					<label for="name" class="form-label"><f:translate key="name" /></label>
-					<f:form.textfield
-						class="form-control"
-						name="name"
-						value="{args.name}"
-						placeholder="{f:translate(key: 'enter.name')}" />
+			<f:form name="filter" action="list">
+				<div class="row row-cols-auto align-items-end g-3">
+					<div class="col">
+						<label for="name" class="form-label">
+							<f:translate key="name" />
+						</label>
+						<f:form.textfield
+							class="form-control"
+							name="name"
+							value="{args.name}"
+							placeholder="{f:translate(key: 'enter.name')}" />
+					</div>
+					<div class="col">
+						<label for="path" class="form-label">
+							<f:translate key="path" />
+						</label>
+						<f:form.textfield
+							class="form-control"
+							name="path"
+							value="{args.path}"
+							placeholder="{f:translate(key: 'enter.path')}" />
+					</div>
+					<div class="col">
+						<label for="fileType" class="form-label">
+							<f:translate key="fileType" />
+						</label>
+						<f:form.select name="fileType" class="form-select" id="fileType" value="{args.fileType}">
+							<f:for each="{fileTypes}" as="fileType">
+								<f:form.select.option value="{fileType}">{fileType}</f:form.select.option>
+							</f:for>
+						</f:form.select>
+					</div>
+					<div class="col">
+						<label for="dateStart" class="form-label">
+							<f:translate key="from" />
+						</label>
+						<f:form.textfield
+							class="form-control"
+							name="dateStart"
+							value="{startTime}"
+							placeholder="Enter start date"
+							type="datetime-local" />
+					</div>
+					<div class="col">
+						<label for="dateStop" class="form-label">
+							<f:translate key="to" />
+						</label>
+						<f:form.textfield
+							class="form-control"
+							name="dateStop"
+							value="{endTime}"
+							placeholder="Enter end date"
+							type="datetime-local" />
+					</div>
+					<div class="col">
+						<f:form.submit class="btn btn-primary" value="{f:translate(key: 'filter')}" />
+						<f:link.action class="btn btn-link" action="list">
+							<f:translate key="reset" />
+						</f:link.action>
+					</div>
+					<div class="col important-flex ms-auto">
+						<p id="selectedCount" class="btm-default form-label p-2">
+							0
+							<f:translate key="selected" />
+						</p>
+						<p class="btm-default form-label p-2">
+							{itemsPerPage}
+							<f:translate key="itemsPerPage" />
+						</p>
+						<p class="btm-default form-label p-2">
+							{totalFiles}
+							<f:translate key="results" />
+						</p>
+					</div>
 				</div>
 				<div class="col">
 					<label for="path" class="form-label"><f:translate key="path" /></label>
@@ -155,13 +220,105 @@
 										</f:link.action>
 									</td>
 								</tr>
-							</f:for>
-						</tbody>
-					</table>
+							</thead>
+							<tbody>
+								<f:for each="{paginator.paginatedItems}" as="file">
+									<tr>
+										<td class="checkbox-column">
+											<input
+												type="checkbox"
+												class="download-checkbox"
+												id="{file.uid}"
+												value="{file.identifier}" />
+										</td>
+										<td class="name-column">
+											<f:variable name="mime_Type" value="{file.mime_type -> f:split(separator: '/')}" />
+											<f:switch expression="{mime_Type.0}">
+												<f:case value="image">
+													<core:icon identifier="mimetypes-media-image" size="small" />
+												</f:case>
+												<f:case value="inode">
+													<core:icon identifier="mimetypes-text-html" size="small" />
+												</f:case>
+												<f:case value="application">
+													<f:if condition="{mime_Type.1} == 'pdf'">
+														<f:then>
+															<core:icon identifier="mimetypes-pdf" size="small" />
+														</f:then>
+														<f:else if="{mime_Type.1} == 'x-empty'">
+															<core:icon identifier="mimetypes-text-html" size="small" />
+														</f:else>
+													</f:if>
+												</f:case>
+												<f:case value="video">
+													<f:if condition="{mime_Type.1} == 'youtube'">
+														<f:then>
+															<core:icon identifier="mimetypes-media-video-youtube" size="small" />
+														</f:then>
+														<f:else if="{mime_Type.1} == 'vimeo'">
+															<core:icon identifier="mimetypes-media-video-vimeo" size="small" />
+														</f:else>
+														<f:else>
+															<core:icon identifier="mimetypes-media-video" size="small" />
+														</f:else>
+													</f:if>
+												</f:case>
+												<f:case value="audio">
+													<core:icon identifier="mimetypes-media-audio" size="small" />
+												</f:case>
+												<f:case value="text">
+													<f:if condition="{file.extension} == 'yaml'}">
+														<f:then>
+															<core:icon identifier="mimetypes-application" size="small" />
+														</f:then>
+														<f:else if="{mime_Type.1} == 'xml'">
+															<core:icon identifier="mimetypes-excel" size="small" />
+														</f:else>
+														<f:else if="{file.extension} == 'json'">
+															<core:icon identifier="mimetypes-text-js" size="small" />
+														</f:else>
+														<f:else>
+															<core:icon identifier="mimetypes-text-text" size="small" />
+														</f:else>
+													</f:if>
+												</f:case>
+											</f:switch>
+											<f:link.action action="detail" arguments="{'file': file}">{file.name} </f:link.action>
+										</td>
+										<td class="path-column">{file.identifier}</td>
+										<td class="filetype-column">{file.extension}</td>
+										<td class="date-column">
+											<f:format.date format="d.m.Y H:i">{file.creation_date}</f:format.date>
+										</td>
+										<td class="download-column text-right">
+											<f:link.action class="btn btn-default" arguments="{'file': file}" action="download">
+												Download
+											</f:link.action>
+										</td>
+									</tr>
+								</f:for>
+							</tbody>
+						</table>
+					</div>
 				</div>
 			</div>
 
-			<!-- ----------------------------------------- Floating Action Button ------------------------- -->
+				<!-- ---------------------------------------------- Pagination -------------------------------- -->
+
+				<ul class="pagination">
+					<f:for each="{pagination.allPageNumbers}" as="page">
+						<li class="page-item">
+							<f:link.action
+								arguments="{currentPageNumber:page, name:args.name, path:args.path, fileType:args.fileType, dateStart:startTime, dateStop:endTime}"
+								class="page-link {f:if(condition:'{currentPageNumber}=={page}',then:'active')}"
+							>
+								{page}
+							</f:link.action>
+						</li>
+					</f:for>
+				</ul>
+
+				<!-- ----------------------------------------- Floating Action Button ------------------------- -->
 
 			<div id="fab" class="position-fixed btn btn-default disabled bottom-0 end-0 m-5">
 				<label for="download_submit" class="pointer">
