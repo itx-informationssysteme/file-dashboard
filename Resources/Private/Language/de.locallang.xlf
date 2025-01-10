@@ -40,8 +40,12 @@
                 <target>ausgewählt</target>
             </trans-unit>
             <trans-unit id="results">
-                <source>results</source>
-                <target>Ergebnisse</target>
+                <source>total results</source>
+                <target>Ergebnisse insgesamt</target>
+            </trans-unit>
+            <trans-unit id="itemsPerPage">
+                <source>results per page</source>
+                <target>Ergebnisse pro Seite</target>
             </trans-unit>
             <trans-unit id="date">
                 <source>Date</source>
@@ -70,6 +74,22 @@
             <trans-unit id="enter.path">
                 <source>Enter a file path</source>
                 <target>Dateipfad eingeben</target>
+            </trans-unit>
+            <trans-unit id="enter.maximumListItems">
+                <source>Enter how many items the list should contain at max before paginating (default is no pagination)</source>
+                <target>Geben Sie ein, wie viele Dateien die Liste maximal vor pagination beinhalten darf (Standart ist keine Pagination)</target>
+            </trans-unit>
+            <trans-unit id="warning.dateTime">
+                <source>Datetime Warning</source>
+                <target>Datetime Warnung</target>
+            </trans-unit>
+            <trans-unit id="warning.setBoth">
+                <source>Please set both start and end date</source>
+                <target>Bitte setzen Sie Anfangs- und Enddatum</target>
+            </trans-unit>
+            <trans-unit id="warning.startAfterEnd">
+                <source>The start date is after the end date</source>
+                <target>Das Startdatum ist nach dem Enddatum</target>
             </trans-unit>
         </body>
 	</file>

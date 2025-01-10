@@ -10,9 +10,12 @@ use Psr\Http\Message\ResponseInterface;
 use RuntimeException;
 use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
 use TYPO3\CMS\Core\Http\Response;
+use TYPO3\CMS\Core\Pagination\ArrayPaginator;
+use TYPO3\CMS\Core\Pagination\SimplePagination;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use ZipStream\ZipStream;
 
 class BackendController extends ActionController
@@ -39,23 +42,23 @@ class BackendController extends ActionController
 
         if (isset($arguments['dateStart']) xor isset($arguments['dateStop'])) {
             $this->addFlashMessage(
-                'Please set both start and end date',
-                'Datetime Warning',
+                LocalizationUtility::translate('LLL:EXT:file_dashboard/Resources/Private/Language/locallang.xlf:warning.setBoth'),
+                LocalizationUtility::translate('LLL:EXT:file_dashboard/Resources/Private/Language/locallang.xlf:warning.dateTime'),
                 ContextualFeedbackSeverity::WARNING,
                 true
             );
         } elseif ((isset($arguments['dateStart']) && isset($arguments['dateStop']))) {
             if (($arguments['dateStart'] > $arguments['dateStop'])) {
                 $this->addFlashMessage(
-                    'The start date is after the end date',
-                    'Datetime Warning',
+                    LocalizationUtility::translate('LLL:EXT:file_dashboard/Resources/Private/Language/locallang.xlf:warning.startAfterEnd'),
+                    LocalizationUtility::translate('LLL:EXT:file_dashboard/Resources/Private/Language/locallang.xlf:warning.dateTime'),
                     ContextualFeedbackSeverity::WARNING,
                     true
                 );
             } elseif ($arguments['dateStart'] == '' || $arguments['dateStop'] == '') {
                 $this->addFlashMessage(
-                    'Please set both start and end date',
-                    'Datetime Warning',
+                    LocalizationUtility::translate('LLL:EXT:file_dashboard/Resources/Private/Language/locallang.xlf:warning.setBoth'),
+                    LocalizationUtility::translate('LLL:EXT:file_dashboard/Resources/Private/Language/locallang.xlf:warning.dateTime'),
                     ContextualFeedbackSeverity::WARNING,
                     true
                 );
@@ -71,6 +74,14 @@ class BackendController extends ActionController
         $latestDate = $result['latestDate'];
         $fileTypes = $result['fileTypes'];
 
+        $maxListItems = $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['file_dashboard']['maximumListItems'];
+        $itemsPerPage = $maxListItems != '' && $maxListItems != null && $maxListItems != 0 ? abs($maxListItems) : count($files);
+        $page = $this->request->hasArgument('currentPageNumber') ? (int)$arguments['currentPageNumber'] : 1;
+        $paginator = new ArrayPaginator($files, $page, $itemsPerPage);
+        $pagination = new SimplePagination($paginator);
+        $incrementedPageNumber = $page >= $paginator->getNumberOfPages() ? $page : $page + 1;
+        $decrementedPageNumber = $page <= 1 ? $page : $page -1;
+
         if (!array_key_exists('name', $arguments)) {
             $startTime->setTimestamp($earliestDate);
             $endTime->setTimestamp($latestDate);
@@ -81,7 +92,14 @@ class BackendController extends ActionController
             $endTime = $arguments['dateStop'];
         }
 
-        $moduleTemplate->assign('files', $files);
+        $moduleTemplate->assign('totalFiles', count($files));
+        $moduleTemplate->assign('itemsPerPage', $itemsPerPage);
+        $moduleTemplate->assign('numberOfPages', $paginator->getNumberOfPages());
+        $moduleTemplate->assign('page', $page);
+        $moduleTemplate->assign('incrementedPageNumber', $incrementedPageNumber);
+        $moduleTemplate->assign('decrementedPageNumber', $decrementedPageNumber);
+        $moduleTemplate->assign('paginator', $paginator);
+        $moduleTemplate->assign('pagination', $pagination);
         $moduleTemplate->assign('fileTypes', $fileTypes);
         $moduleTemplate->assign('startTime', $startTime);
         $moduleTemplate->assign('endTime', $endTime);
