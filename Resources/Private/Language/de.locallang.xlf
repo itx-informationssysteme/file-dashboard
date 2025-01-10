@@ -71,6 +71,10 @@
                 <source>Enter a file path</source>
                 <target>Dateipfad eingeben</target>
             </trans-unit>
+            <trans-unit id="enter.maximumListItems">
+                <source>Enter how many items the list should contain at max before paginating (default is no pagination)</source>
+                <target>Geben Sie ein, wie viele Dateien die Liste maximal vor pagination beinhalten darf (Standart ist keine Pagination)</target>
+            </trans-unit>
         </body>
 	</file>
 </xliff>
