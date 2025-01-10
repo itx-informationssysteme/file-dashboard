@@ -82,7 +82,11 @@
 							<f:translate key="selected" />
 						</p>
 						<p class="btm-default form-label p-2">
-							<f:count>{files}</f:count>
+							{itemsPerPage}
+							<f:translate key="itemsPerPage" />
+						</p>
+						<p class="btm-default form-label p-2">
+							{totalFiles}
 							<f:translate key="results" />
 						</p>
 					</div>
@@ -120,7 +124,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								<f:for each="{files}" as="file">
+								<f:for each="{paginator.paginatedItems}" as="file">
 									<tr>
 										<td class="checkbox-column">
 											<input
@@ -199,6 +203,21 @@
 						</table>
 					</div>
 				</div>
+
+				<!-- ---------------------------------------------- Pagination -------------------------------- -->
+
+				<ul class="pagination">
+					<f:for each="{pagination.allPageNumbers}" as="page">
+						<li class="page-item">
+							<f:link.action
+								arguments="{currentPageNumber:page, name:args.name, path:args.path, fileType:args.fileType, dateStart:startTime, dateStop:endTime}"
+								class="page-link {f:if(condition:'{currentPageNumber}=={page}',then:'active')}"
+							>
+								{page}
+							</f:link.action>
+						</li>
+					</f:for>
+				</ul>
 
 				<!-- ----------------------------------------- Floating Action Button ------------------------- -->
 
