@@ -79,6 +79,8 @@ class BackendController extends ActionController
         $page = $this->request->hasArgument('currentPageNumber') ? (int)$arguments['currentPageNumber'] : 1;
         $paginator = new ArrayPaginator($files, $page, $itemsPerPage);
         $pagination = new SimplePagination($paginator);
+        $incrementedPageNumber = $page >= $paginator->getNumberOfPages() ? $page : $page + 1;
+        $decrementedPageNumber = $page <= 1 ? $page : $page -1;
 
         if (!array_key_exists('name', $arguments)) {
             $startTime->setTimestamp($earliestDate);
@@ -92,7 +94,10 @@ class BackendController extends ActionController
 
         $moduleTemplate->assign('totalFiles', count($files));
         $moduleTemplate->assign('itemsPerPage', $itemsPerPage);
+        $moduleTemplate->assign('numberOfPages', $paginator->getNumberOfPages());
         $moduleTemplate->assign('page', $page);
+        $moduleTemplate->assign('incrementedPageNumber', $incrementedPageNumber);
+        $moduleTemplate->assign('decrementedPageNumber', $decrementedPageNumber);
         $moduleTemplate->assign('paginator', $paginator);
         $moduleTemplate->assign('pagination', $pagination);
         $moduleTemplate->assign('fileTypes', $fileTypes);
