@@ -46,7 +46,7 @@ class BackendController extends ActionController
             $message = GeneralUtility::makeInstance(
                 FlashMessage::class,
                 LocalizationUtility::translate('LLL:EXT:file_dashboard/Resources/Private/Language/locallang.xlf:warning.setBoth'),
-                LocalizationUtility::translate('LLL:EXT:file_dashboard/Resources/Private/Language/locallang.xlf:warning.dateTime'),,
+                LocalizationUtility::translate('LLL:EXT:file_dashboard/Resources/Private/Language/locallang.xlf:warning.dateTime'),
                 FlashMessage::WARNING,
                 true
             );
@@ -79,7 +79,7 @@ class BackendController extends ActionController
         $latestDate = $result['latestDate'];
         $fileTypes = $result['fileTypes'];
 
-        $maxListItems = $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['file_dashboard']['maximumListItems'];
+        $maxListItems = $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['file_dashboard']['maximumListItems'] ?? count($files);
         $itemsPerPage = $maxListItems != '' && $maxListItems != null && $maxListItems != 0 ? abs($maxListItems) : count($files);
         $page = $this->request->hasArgument('currentPageNumber') ? (int)$arguments['currentPageNumber'] : 1;
         $paginator = new ArrayPaginator($files, $page, $itemsPerPage);
