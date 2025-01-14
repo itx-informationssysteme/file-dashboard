@@ -105,7 +105,7 @@ class FileRepository extends Repository
 
     public function getCachedFiles(array $arguments): array
     {
-        if (array_key_exists('name', $arguments)) {
+        if (array_key_exists('name', $arguments) || $arguments == []) {
             $value = $this->getFiles($arguments);
             $value['fileTypes'] = $this->getFileExtensions();
             return $value;
