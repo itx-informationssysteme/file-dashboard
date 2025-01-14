@@ -85,7 +85,7 @@ class BackendController extends ActionController
         $paginator = new ArrayPaginator($files, $page, $itemsPerPage);
         $pagination = new SimplePagination($paginator);
         $incrementedPageNumber = $page >= $paginator->getNumberOfPages() ? $page : $page + 1;
-        $decrementedPageNumber = $page <= 1 ? $page : $page -1;
+        $decrementedPageNumber = $page <= 1 ? $page : $page - 1;
 
         if (!array_key_exists('name', $arguments)) {
             $startTime->setTimestamp($earliestDate);
