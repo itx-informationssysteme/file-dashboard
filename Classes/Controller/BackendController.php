@@ -9,6 +9,7 @@ use Itx\FileDashboard\Event\FileRenameEvent;
 use Psr\Http\Message\ResponseInterface;
 use RuntimeException;
 use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
+use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Http\Response;
 use TYPO3\CMS\Core\Pagination\ArrayPaginator;
 use TYPO3\CMS\Core\Pagination\SimplePagination;
@@ -74,7 +75,9 @@ class BackendController extends ActionController
         $latestDate = $result['latestDate'];
         $fileTypes = $result['fileTypes'];
 
-        $maxListItems = $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['file_dashboard']['maximumListItems'];
+        $maxListItems = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(ExtensionConfiguration::class)
+        ->get('file_dashboard')['maximumListItems'];
+
         $itemsPerPage = $maxListItems != '' && $maxListItems != null && $maxListItems != 0 ? abs($maxListItems) : count($files);
         $page = $this->request->hasArgument('currentPageNumber') ? (int)$arguments['currentPageNumber'] : 1;
         $paginator = new ArrayPaginator($files, $page, $itemsPerPage);
