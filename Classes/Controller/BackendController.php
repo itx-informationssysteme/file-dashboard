@@ -104,6 +104,7 @@ class BackendController extends ActionController
         }
 
         $this->view->assignMultiple([
+            'files' => $files,
             'totalFiles' => count($files),
             'itemsPerPage' => $itemsPerPage,
             'page' => $page,

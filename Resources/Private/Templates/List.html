@@ -16,25 +16,32 @@
 
 			<!-- ------------------------------------------ Filter --------------------------------------------------->
 
-			<f:form name="filter" action="list">
+			<f:for each="{files}" as="file">
+				<p class="fileName">{file.name}</p>
+				<p class="pathName">{file.identifier}</p>
+			</f:for>
+
+			<f:form name="filter" action="list" autocomplete="off">
 				<div class="row row-cols-auto align-items-end g-3">
-					<div class="col">
+					<div class="col autocomplete">
 						<label for="name" class="form-label">
 							<f:translate key="name" />
 						</label>
 						<f:form.textfield
 							class="form-control"
 							name="name"
+							id="nameInput"
 							value="{args.name}"
 							placeholder="{f:translate(key: 'enter.name')}" />
 					</div>
-					<div class="col">
+					<div class="col autocomplete">
 						<label for="path" class="form-label">
 							<f:translate key="path" />
 						</label>
 						<f:form.textfield
 							class="form-control"
 							name="path"
+							id="pathInput"
 							value="{args.path}"
 							placeholder="{f:translate(key: 'enter.path')}" />
 					</div>
