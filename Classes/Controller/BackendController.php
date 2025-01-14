@@ -91,7 +91,7 @@ class BackendController extends ActionController
 
         if (!array_key_exists('name', $arguments)) {
             $startTime->setTimestamp($earliestDate);
-            $endTime->setTimestamp($latestDate);
+            $endTime->setTimestamp($latestDate + 60);
             $startTime = $startTime->format('Y-m-d\TH:i');
             $endTime = $endTime->format('Y-m-d\TH:i');
         } else {
