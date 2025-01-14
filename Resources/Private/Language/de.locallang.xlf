@@ -91,6 +91,10 @@
                 <source>The start date is after the end date</source>
                 <target>Das Startdatum ist nach dem Enddatum</target>
             </trans-unit>
+            <trans-unit id="nothing.found">
+                <source>Nothing found</source>
+                <target>Keine Suchergebnisse gefunden</target>
+            </trans-unit>
         </body>
 	</file>
 </xliff>
