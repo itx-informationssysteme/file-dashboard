@@ -15,6 +15,9 @@
             <trans-unit id="fileType">
                 <source>File Type</source>
             </trans-unit>
+            <trans-unit id="fileSize">
+                <source>File Size</source>
+            </trans-unit>
             <trans-unit id="from">
                 <source>From</source>
             </trans-unit>
@@ -29,6 +32,9 @@
             </trans-unit>
             <trans-unit id="selected">
                 <source>selected</source>
+            </trans-unit>
+            <trans-unit id="selected.Size">
+                <source>total</source>
             </trans-unit>
             <trans-unit id="results">
                 <source>total results</source>

@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	const checkboxes = document.querySelectorAll('.download-checkbox')
 	const fab = document.getElementById('fab')
 	const form = document.getElementById('download')
+	const selectedSize = document.getElementById('selectedSize')
 	const jsonInput = document.getElementById('downloadCheckboxJson')
 
 	//Checkbox handler
@@ -12,6 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		})
 		updateFabClass()
 		updateSelectedCount()
+		updateSelectedSize()
 	}
 
 	const updateFabClass = () => {
@@ -20,8 +22,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
 		if (anyChecked) {
 			fab.className = 'position-fixed btn btn-primary bottom-0 end-0 m-5'
+			selectedSize.className = 'btm-default form-label p-2'
 		} else {
 			fab.className = 'position-fixed btn btn-default disabled bottom-0 end-0 m-5'
+			selectedSize.className = 'btm-default form-label p-2 d-none'
 		}
 
 		// Update "Check All" state
@@ -37,6 +41,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		checkbox.addEventListener('change', () => {
 			updateFabClass()
 			updateSelectedCount()
+			updateSelectedSize()
 		})
 	})
 
@@ -59,6 +64,39 @@ document.addEventListener('DOMContentLoaded', function () {
 	const updateSelectedCount = () => {
 		const count = Array.from(checkboxes).filter(checkbox => checkbox.checked).length
 		selectedCount.textContent = `${count} selected`
+	}
+
+	const updateSelectedSize = () => {
+		let total = 0;
+	
+		const checkedCheckboxes = Array.from(checkboxes).filter(checkbox => checkbox.checked);
+	
+		checkedCheckboxes.forEach(checkbox => {
+	
+			const matchingElements = Array.from(document.querySelectorAll('.totalSize'))
+				.filter(element => element.id == checkbox.id+'-size')
+	
+			matchingElements.forEach(element => {
+				total += parseFloat(element.textContent)
+			});
+		});
+	
+		const selectedSizeValue = document.getElementById('selectedSizeValue')
+		if (selectedSizeValue) {
+			selectedSizeValue.innerHTML = formatBytes(total)
+		}
+	};
+
+	function formatBytes(bytes, decimals = 2) {
+		if (!+bytes) return '0 Bytes'
+	
+		const k = 1024
+		const dm = decimals < 0 ? 0 : decimals
+		const sizes = ['Bytes', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB']
+	
+		const i = Math.floor(Math.log(bytes) / Math.log(k))
+	
+		return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`
 	}
 
 	// ------------------------------------- Search suggestions -----------------------------

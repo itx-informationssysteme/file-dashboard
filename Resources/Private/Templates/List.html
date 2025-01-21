@@ -19,6 +19,8 @@
 			<f:for each="{files}" as="file">
 				<p class="fileName">{file.name}</p>
 				<p class="pathName">{file.identifier}</p>
+				<p id="{file.uid}-size" class="totalSize">{file.size}</p>
+
 			</f:for>
 			<p id="nothingFound" style="display: none">{f:translate(key: 'nothing.found')}</p>
 
@@ -85,6 +87,10 @@
 						</f:link.action>
 					</div>
 					<div class="col important-flex ms-auto">
+						<div id="selectedSize" class="btm-default form-label p-2 d-none">
+							<p id="selectedSizeValue" class="d-inline"></p>
+							<f:translate key="selected.Size" />
+						</div>
 						<p id="selectedCount" class="btm-default form-label p-2">
 							0
 							<f:translate key="selected" />
@@ -122,6 +128,9 @@
 									</th>
 									<th class="filetype-column">
 										<f:translate key="fileType" />
+									</th>
+									<th class="filesize-column">
+										<f:translate key="fileSize" />
 									</th>
 									<th class="date-column">
 										<f:translate key="date" />
@@ -197,6 +206,7 @@
 										</td>
 										<td class="path-column">{file.identifier}</td>
 										<td class="filetype-column">{file.extension}</td>
+										<td class="filesize-column">{file.size -> f:format.bytes(decimals: 2)}</td>
 										<td class="date-column">
 											<f:format.date format="d.m.Y H:i">{file.creation_date}</f:format.date>
 										</td>
