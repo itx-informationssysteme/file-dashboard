@@ -34,18 +34,25 @@
 }
 
 .table .name-column {
-	width: 35%;
+	width: 30%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 
 .table .path-column {
-	width: 35%;
+	width: 30%;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
 }
 
 .table .filetype-column {
-	width: 10%;
+	width: 8%;
+}
+
+.table .filesize-column {
+	width: 8%;
 }
 
 .table .date-column {
@@ -90,9 +97,4 @@ body {
 .autocomplete-active {
 	background-color: DodgerBlue !important;
 	color: #ffffff;
-}
-
-.fileName,
-.pathName {
-	display: none;
 }

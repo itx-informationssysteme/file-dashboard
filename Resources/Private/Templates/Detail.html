@@ -3,8 +3,7 @@
 
 	<f:section name="Content">
 		<f:flashMessages />
-
-		<f:link.action action="list" class="btn btn-primary">
+		<f:link.action action="list" class="btn btn-primary" arguments="{name: args.name, path: args.path, fileType: args.fileType, dateStart: args.dateStart, dateStop: args.dateStop}">
 			<f:translate key="back-to-list" />
 		</f:link.action>
 		<h1 class="pt-5">{file.name}</h1>
