@@ -222,6 +222,7 @@ class BackendController extends ActionController
 
         $moduleTemplate->assign('file', $file);
         $moduleTemplate->assign('metaData', $metaData);
+        $moduleTemplate->assign('args', $this->request->getArguments()['args'] ?? []);
 
         return $moduleTemplate->renderResponse('Detail');
     }

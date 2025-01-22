@@ -3,7 +3,9 @@ document.addEventListener('DOMContentLoaded', function () {
 	const checkboxes = document.querySelectorAll('.download-checkbox')
 	const fab = document.getElementById('fab')
 	const form = document.getElementById('download')
+	const selectedSize = document.getElementById('selectedSize')
 	const jsonInput = document.getElementById('downloadCheckboxJson')
+	const files = JSON.parse(document.getElementById('data-files').dataset.files)
 
 	//Checkbox handler
 	const handleCheckAllChange = () => {
@@ -12,6 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		})
 		updateFabClass()
 		updateSelectedCount()
+		updateSelectedSize()
 	}
 
 	const updateFabClass = () => {
@@ -20,8 +23,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
 		if (anyChecked) {
 			fab.className = 'position-fixed btn btn-primary bottom-0 end-0 m-5'
+			selectedSize.className = 'btm-default form-label p-2'
 		} else {
 			fab.className = 'position-fixed btn btn-default disabled bottom-0 end-0 m-5'
+			selectedSize.className = 'btm-default form-label p-2 d-none'
 		}
 
 		// Update "Check All" state
@@ -37,6 +42,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		checkbox.addEventListener('change', () => {
 			updateFabClass()
 			updateSelectedCount()
+			updateSelectedSize()
 		})
 	})
 
@@ -61,10 +67,48 @@ document.addEventListener('DOMContentLoaded', function () {
 		selectedCount.textContent = `${count} selected`
 	}
 
+	const updateSelectedSize = () => {
+		let total = 0;
+	
+		const checkedCheckboxes = Array.from(checkboxes).filter(checkbox => checkbox.checked);
+	
+		checkedCheckboxes.forEach(checkbox => {
+			files.every(file => {
+				if (file.identifier == checkbox.value) {
+					total += file.size
+					return false
+				}
+				return true
+			})
+		})
+
+		const selectedSizeValue = document.getElementById('selectedSizeValue')
+		if (selectedSizeValue) {
+			selectedSizeValue.innerHTML = formatBytes(total)
+		}
+	};
+
+	function formatBytes(bytes, decimals = 2) {
+		if (!+bytes) return '0 Bytes'
+	
+		const k = 1024
+		const dm = decimals < 0 ? 0 : decimals
+		const sizes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
+	
+		const i = Math.floor(Math.log(bytes) / Math.log(k))
+	
+		return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`
+	}
+
 	// ------------------------------------- Search suggestions -----------------------------
 
-	var fileNames = document.getElementsByClassName('fileName')
-	var pathNames = document.getElementsByClassName('pathName')
+	var fileNames = []
+	var pathNames = []
+
+	files.forEach(file => {
+		fileNames.push(file.name)
+		pathNames.push(file.identifier)
+	})
 
 	function autocomplete(inp, arr) {
 		var currentFocus
@@ -86,18 +130,18 @@ document.addEventListener('DOMContentLoaded', function () {
 			let matchFound = false
 
 			for (i = 0; i < arr.length; i++) {
-				if (arr[i].innerHTML.toUpperCase().includes(val.toUpperCase()) && val.length >= 2) {
+				if (arr[i].toUpperCase().includes(val.toUpperCase()) && val.length >= 2) {
 					matchFound = true // A match is found
 					b = document.createElement('DIV')
-					var startIndex = arr[i].innerHTML.toUpperCase().indexOf(val.toUpperCase())
+					var startIndex = arr[i].toUpperCase().indexOf(val.toUpperCase())
 					b.innerHTML =
-						arr[i].innerHTML.substring(0, startIndex) +
+						arr[i].substring(0, startIndex) +
 						'<strong>' +
-						arr[i].innerHTML.substr(startIndex, val.length) +
+						arr[i].substr(startIndex, val.length) +
 						'</strong>' +
-						arr[i].innerHTML.substring(startIndex + val.length)
+						arr[i].substring(startIndex + val.length)
 
-					b.innerHTML += "<input type='hidden' value='" + arr[i].innerHTML + "'>"
+					b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>"
 					b.addEventListener('click', function (e) {
 						inp.value = this.getElementsByTagName('input')[0].value
 						closeAllLists()
