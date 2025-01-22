@@ -234,6 +234,7 @@ class BackendController extends ActionController
         $this->view->assignMultiple([
             'file' => $file,
             'metaData' => $metaData,
+            'args' => $this->request->getArguments()['args'] ?? [],
         ]);
         $moduleTemplate->setContent($this->view->render());
         return $this->htmlResponse($moduleTemplate->renderContent());
