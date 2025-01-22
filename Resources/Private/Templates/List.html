@@ -16,12 +16,7 @@
 
 			<!-- ------------------------------------------ Filter --------------------------------------------------->
 
-			<!-- TODO: Pass files to JavaScript in a less terrible way -->
-			<f:for each="{files}" as="file">
-				<p class="fileName">{file.name}</p>
-				<p class="pathName">{file.identifier}</p>
-				<p id="{file.uid}-size" class="totalSize">{file.size}</p>
-			</f:for>
+			<f:form.hidden name="files" id="data-files" data="{files: '{files -> f:format.json()}'}" />
 
 			<p id="nothingFound" style="display: none">{f:translate(key: 'nothing.found')}</p>
 

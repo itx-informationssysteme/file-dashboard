@@ -98,9 +98,3 @@ body {
 	background-color: DodgerBlue !important;
 	color: #ffffff;
 }
-
-.fileName,
-.pathName,
-.totalSize {
-	display: none;
-}
