@@ -107,7 +107,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 	files.forEach(file => {
 		fileNames.push(file.name)
-		pathNames.push(file.path)
+		pathNames.push(file.identifier)
 	})
 
 	function autocomplete(inp, arr) {
