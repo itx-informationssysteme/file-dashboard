@@ -1,2 +1,5 @@
 # cat=General; type=int+; label=LLL:EXT:file_dashboard/Resources/Private/Language/locallang.xlf:enter.maximumListItems
 maximumListItems = 100
+
+# cat=General; type=int+; label=LLL:EXT:file_dashboard/Resources/Private/Language/locallang.xlf:enter.downloadTimeout
+downloadTimeout = 300

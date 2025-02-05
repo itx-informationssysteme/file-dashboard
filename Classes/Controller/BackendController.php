@@ -167,7 +167,7 @@ class BackendController extends ActionController
     public function multiDownloadAction(): Response
     {
         // Set 30 minute timeout for this request
-        set_time_limit(1800);
+        set_time_limit($GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['file_dashboard']['downloadTimeout'] ?? 300);
 
         $filesToDownload = json_decode($this->request->getArguments()['downloadCheckboxJson'] ?? '{}', true);
 
