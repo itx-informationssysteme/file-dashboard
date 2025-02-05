@@ -87,6 +87,10 @@
                 <source>Enter how many items the list should contain at max before paginating (default is no pagination)</source>
                 <target>Geben Sie ein, wie viele Dateien die Liste maximal vor pagination beinhalten darf (Standart ist keine Pagination)</target>
             </trans-unit>
+            <trans-unit id="enter.downloadTimeout">
+                <source>Enter how much time in seconds to give the downloads to finish (unlimited if set to 0)</source>
+                <source>Geben Sie ein, nach wie vielen Sekunden ein Download abgebrochen werden soll (unbegrenzt wenn hier 0 gesetzt wird)</source>
+            </trans-unit>
             <trans-unit id="warning.dateTime">
                 <source>Datetime Warning</source>
                 <target>Datetime Warnung</target>

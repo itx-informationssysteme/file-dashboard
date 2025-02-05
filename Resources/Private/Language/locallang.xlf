@@ -66,6 +66,9 @@
             <trans-unit id="enter.maximumListItems">
                 <source>Enter how many items the list should contain at max before paginating (default is no pagination)</source>
             </trans-unit>
+            <trans-unit id="enter.downloadTimeout">
+                <source>Enter how much time in seconds to give the downloads to finish (unlimited if set to 0)</source>
+            </trans-unit>
             <trans-unit id="warning.dateTime">
                 <source>Datetime Warning</source>
             </trans-unit>
