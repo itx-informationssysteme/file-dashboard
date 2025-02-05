@@ -181,6 +181,9 @@ class BackendController extends ActionController
     // Archives multiple files into .zip file and then starts download
     public function multiDownloadAction(): Response
     {
+        // Set 30 minute timeout for this request
+        set_time_limit(1800);
+
         $filesToDownload = json_decode($this->request->getArguments()['downloadCheckboxJson'] ?? '{}', true);
 
         while (ob_get_level() > 0) {
