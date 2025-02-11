@@ -214,6 +214,29 @@ class BackendController extends ActionController
             $event = $this->eventDispatcher->dispatch(new FileRenameEvent($fileName, $identifier));
             $changedName = $event->getFileName();
 
+            $maxFileNameLength = $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['file_dashboard']['maxFileNameLength'] ?? 150;
+            if ($maxFileNameLength < 6) {
+                $maxFileNameLength = 6;
+            } else if ($maxFileNameLength > 230) {
+                $maxFileNameLength = 230;
+            }
+            
+            if (strlen($changedName) > $maxFileNameLength) {
+                $cutoffFactor = floatval($GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['file_dashboard']['cutoffFactor']) ?? 70.0;
+                $cutoffFactor /= 100;
+                if ($cutoffFactor > 1.0) {
+                    $cutoffFactor = 1.0;
+                } else if ($cutoffFactor < 0.0) {
+                    $cutoffFactor = 0.0;
+                }
+                $fileExtension = pathinfo($changedName, PATHINFO_EXTENSION);
+                $fileExtensionLength = strlen($fileExtension);
+                $firstHalf = substr($changedName, 0, round($cutoffFactor * $maxFileNameLength));
+                $secondHalf = substr($changedName, round((-(1-$cutoffFactor) * $maxFileNameLength)-$fileExtensionLength), round((1-$cutoffFactor) * $maxFileNameLength));
+
+                $changedName = $firstHalf . '...' . $secondHalf . '.' . pathinfo($changedName, PATHINFO_EXTENSION);
+            }
+
             $zip->addFileFromPath($changedName, $absolutePath);
         }
 
