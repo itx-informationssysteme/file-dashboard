@@ -84,12 +84,20 @@
                 <target>Dateipfad eingeben</target>
             </trans-unit>
             <trans-unit id="enter.maximumListItems">
-                <source>Enter how many items the list should contain at max before paginating (default is no pagination)</source>
-                <target>Geben Sie ein, wie viele Dateien die Liste maximal vor pagination beinhalten darf (Standart ist keine Pagination)</target>
+                <source>Maximum list items: Enter how many items the list should contain at max before paginating (default is no pagination)</source>
+                <target>Maximale Listenlänge: Geben Sie ein, wie viele Dateien die Liste maximal vor pagination beinhalten darf (Standart ist keine Pagination)</target>
             </trans-unit>
             <trans-unit id="enter.downloadTimeout">
-                <source>Enter how much time in seconds to give the downloads to finish (unlimited if set to 0)</source>
-                <source>Geben Sie ein, nach wie vielen Sekunden ein Download abgebrochen werden soll (unbegrenzt wenn hier 0 gesetzt wird)</source>
+                <source>Maximum download time: Enter how much time in seconds to give the downloads to finish (unlimited if set to 0)</source>
+                <target>Maximale Download Dauer: Geben Sie ein, nach wie vielen Sekunden ein Download abgebrochen werden soll (unbegrenzt wenn hier 0 gesetzt wird)</target>
+            </trans-unit>
+            <trans-unit id="enter.maxFileNameLength">
+                <source>Maximum file name length: Enter the maximum file name length of a file in multidownload (anything above 200 not recommended, as unzipping might not work if the path is too long)</source>
+                <target>Maximale Dateinamenlänge: Geben Sie ein, wie lang ein Dateiname beim herunterladen mehrerer Dateien sein darf (alles über 200 ist nicht empfohlen, da sonst das entpacken der .zip Datei scheitern kann)</target>
+            </trans-unit>
+            <trans-unit id="enter.cutoffFactor">
+                <source>Cutoff Factor: When a filename is longer than the number of characters set above, this setting decides how much of the string will be set before the ... in % (so if 70 is set, 70% of the shortened string will be before the ... and 30% of it after)</source>
+                <target>Cutoff Faktor: Wenn ein Dateiname die oben gesetzte Maximallänge überschreitet, entscheidet dieser Wert, wie viel vom gekürzten String vor dem ... gesetzt wird in Prozent (bspw. falls hier 70 gesetzt wird, werden 70% vom gekürzten string vor dem ... gesetzt, die restlichen 30% danach)</target>
             </trans-unit>
             <trans-unit id="warning.dateTime">
                 <source>Datetime Warning</source>

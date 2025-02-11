@@ -64,10 +64,16 @@
                 <source>Enter a file path</source>
             </trans-unit>
             <trans-unit id="enter.maximumListItems">
-                <source>Enter how many items the list should contain at max before paginating (default is no pagination)</source>
+                <source>Maximum list items: Enter how many items the list should contain at max before paginating (default is no pagination)</source>
             </trans-unit>
             <trans-unit id="enter.downloadTimeout">
-                <source>Enter how much time in seconds to give the downloads to finish (unlimited if set to 0)</source>
+                <source>Maximum download time: Enter how much time in seconds to give the downloads to finish (unlimited if set to 0)</source>
+            </trans-unit>
+            <trans-unit id="enter.maxFileNameLength">
+                <source>Maximum file name length: Enter the maximum file name length of a file in multidownload (anything above 200 not recommended, as unzipping might not work if the path is too long)</source>
+            </trans-unit>
+            <trans-unit id="enter.cutoffFactor">
+                <source>Cutoff Factor: When a filename is longer than the number of characters set above, this setting decides how much of the string will be set before the ... in % (so if 70 is set, 70% of the shortened string will be before the ... and 30% of it after)</source>
             </trans-unit>
             <trans-unit id="warning.dateTime">
                 <source>Datetime Warning</source>
