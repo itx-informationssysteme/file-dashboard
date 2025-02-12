@@ -211,7 +211,7 @@ class BackendController extends ActionController
             }
             
             if (strlen($changedName) > $maxFileNameLength) {
-                $cutoffFactor = floatval($GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['file_dashboard']['cutoffFactor']) ?? 70.0;
+                $cutoffFactor = floatval($GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['file_dashboard']['cutoffFactor'] ?? 70.0);
                 $cutoffFactor /= 100;
                 if ($cutoffFactor > 1.0) {
                     $cutoffFactor = 1.0;
