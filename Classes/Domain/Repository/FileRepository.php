@@ -83,8 +83,8 @@ class FileRepository extends Repository
         $result = $queryBuilder->executeQuery();
 
         while ($row = $result->fetchAssociative()) {
-            if (!in_array($row['extension'], $fileTypes)) {
-                array_push($fileTypes, $row['extension']);
+            if ( $fileTypes !== null && !in_array($row['extension'], $fileTypes)) {
+                $fileTypes[] = $row['extension'];
             }
         }
 
