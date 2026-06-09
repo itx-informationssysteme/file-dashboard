@@ -79,6 +79,9 @@ class FileRepository extends Repository
         $queryBuilder
             ->select('extension')
             ->from('sys_file')
+            ->where(
+                $queryBuilder->expr()->neq('extension', $queryBuilder->createNamedParameter(''))
+            )
             ->distinct();
         $result = $queryBuilder->executeQuery();
 
