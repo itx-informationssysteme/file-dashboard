@@ -15,7 +15,7 @@ return [
                 'detail',
             ],
         ],
-        'access' => 'user,group',
+        'access' => 'user',
         'iconIdentifier' => 'cooler-filelist',
         'labels' => 'LLL:EXT:file_dashboard/Resources/Private/Language/locallang_backend.xlf',
         'navigationComponentId' => '',

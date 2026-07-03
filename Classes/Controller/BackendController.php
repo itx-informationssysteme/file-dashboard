@@ -2,12 +2,9 @@
 
 namespace Itx\FileDashboard\Controller;
 
-use DateTime;
-use Exception;
 use Itx\FileDashboard\Domain\Repository\FileRepository;
 use Itx\FileDashboard\Event\FileRenameEvent;
 use Psr\Http\Message\ResponseInterface;
-use RuntimeException;
 use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Http\Response;
@@ -38,8 +35,8 @@ class BackendController extends ActionController
     {
         $moduleTemplate = $this->moduleTemplateFactory->create($this->request);
         $arguments = $this->request->getArguments();
-        $startTime = new DateTime();
-        $endTime = new DateTime();
+        $startTime = new \DateTime();
+        $endTime = new \DateTime();
 
         if (isset($arguments['dateStart']) xor isset($arguments['dateStop'])) {
             $this->addFlashMessage(
@@ -120,13 +117,13 @@ class BackendController extends ActionController
 
         try {
             $data = $this->resourceFactory->getFileObject($file['uid']);
-        } catch (Exception $e) {
-            throw new RuntimeException($e);
+        } catch (\Exception $e) {
+            throw new \RuntimeException($e);
         }
 
         try {
             $absolutePath = $data->getForLocalProcessing();
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $absolutePath = '';
         }
 
@@ -191,7 +188,7 @@ class BackendController extends ActionController
 
             try {
                 $absolutePath = $file->getForLocalProcessing();
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 $absolutePath = '';
             }
             $fileName = $file->getName();
@@ -206,22 +203,22 @@ class BackendController extends ActionController
             $maxFileNameLength = $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['file_dashboard']['maxFileNameLength'] ?? 150;
             if ($maxFileNameLength < 6) {
                 $maxFileNameLength = 6;
-            } else if ($maxFileNameLength > 230) {
+            } elseif ($maxFileNameLength > 230) {
                 $maxFileNameLength = 230;
             }
-            
+
             if (strlen($changedName) > $maxFileNameLength) {
-                $cutoffFactor = floatval($GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['file_dashboard']['cutoffFactor'] ?? 70.0);
+                $cutoffFactor = (float)($GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['file_dashboard']['cutoffFactor'] ?? 70.0);
                 $cutoffFactor /= 100;
                 if ($cutoffFactor > 1.0) {
                     $cutoffFactor = 1.0;
-                } else if ($cutoffFactor < 0.0) {
+                } elseif ($cutoffFactor < 0.0) {
                     $cutoffFactor = 0.0;
                 }
                 $fileExtension = pathinfo($changedName, PATHINFO_EXTENSION);
                 $fileExtensionLength = strlen($fileExtension);
                 $firstHalf = substr($changedName, 0, round($cutoffFactor * $maxFileNameLength));
-                $secondHalf = substr($changedName, round((-(1-$cutoffFactor) * $maxFileNameLength)-$fileExtensionLength), round((1-$cutoffFactor) * $maxFileNameLength));
+                $secondHalf = substr($changedName, round((-(1 - $cutoffFactor) * $maxFileNameLength) - $fileExtensionLength), round((1 - $cutoffFactor) * $maxFileNameLength));
 
                 $changedName = $firstHalf . '...' . $secondHalf . '.' . pathinfo($changedName, PATHINFO_EXTENSION);
             }

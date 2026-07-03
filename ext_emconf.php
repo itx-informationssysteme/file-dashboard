@@ -30,7 +30,7 @@ $EM_CONF[$_EXTKEY] = [
     'category' => 'backend',
     'author' => '',
     'author_company' => 'it.x informationssysteme gmbh',
-    'author_email' => 'typo-itx@itx.de',
+    'author_email' => 'support@itx.de',
     'state' => 'stable',
     'uploadfolder' => 1,
     'createDirs' => '',
@@ -38,7 +38,7 @@ $EM_CONF[$_EXTKEY] = [
     'version' => '2.2.8',
     'constraints' => [
         'depends' => [
-            'typo3' => '12.4.1-13.9.99',
+            'typo3' => '12.4.0-14.9.99',
         ],
         'conflicts' => [],
         'suggests' => [],
