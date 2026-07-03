@@ -22,10 +22,10 @@ document.addEventListener('DOMContentLoaded', function () {
 		const allChecked = Array.from(checkboxes).every(checkbox => checkbox.checked)
 
 		if (anyChecked) {
-			fab.className = 'position-fixed btn btn-primary bottom-0 end-0 m-5'
+			fab.className = 'btn btn-primary'
 			selectedSize.className = 'btm-default form-label p-2'
 		} else {
-			fab.className = 'position-fixed btn btn-default disabled bottom-0 end-0 m-5'
+			fab.className = 'btn btn-default disabled'
 			selectedSize.className = 'btm-default form-label p-2 d-none'
 		}
 
