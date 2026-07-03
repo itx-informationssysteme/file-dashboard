@@ -98,3 +98,9 @@ body {
 	background-color: DodgerBlue !important;
 	color: #ffffff;
 }
+
+#fab {
+	position: absolute;
+	bottom: 8rem;
+	right: 5rem;
+}

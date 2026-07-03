@@ -2,7 +2,6 @@
 
 namespace Itx\FileDashboard\Domain\Repository;
 
-use DateTime;
 use Doctrine\DBAL\Result;
 use TYPO3\CMS\Core\Cache\Frontend\FrontendInterface;
 use TYPO3\CMS\Core\Database\Connection;
@@ -45,8 +44,8 @@ class FileRepository extends Repository
                 ->andWhere($queryBuilder->expr()->eq('extension', $queryBuilder->createNamedParameter($arguments['fileType'], Connection::PARAM_STR)));
         }
         if (array_key_exists('queryForDate', $arguments)) {
-            $filterStartTime = DateTime::createFromFormat('Y-m-d\TH:i', $arguments['dateStart'])->getTimestamp();
-            $filterEndTime = DateTime::createFromFormat('Y-m-d\TH:i', $arguments['dateStop'])->getTimestamp();
+            $filterStartTime = \DateTime::createFromFormat('Y-m-d\TH:i', $arguments['dateStart'])->getTimestamp();
+            $filterEndTime = \DateTime::createFromFormat('Y-m-d\TH:i', $arguments['dateStop'])->getTimestamp();
             $queryBuilder
                 ->andWhere($queryBuilder->expr()->lte('creation_date', $filterEndTime))
                 ->andWhere($queryBuilder->expr()->gte('creation_date', $filterStartTime));
@@ -86,7 +85,7 @@ class FileRepository extends Repository
         $result = $queryBuilder->executeQuery();
 
         while ($row = $result->fetchAssociative()) {
-            if ( $fileTypes !== null && !in_array($row['extension'], $fileTypes)) {
+            if ($fileTypes !== null && !in_array($row['extension'], $fileTypes)) {
                 $fileTypes[] = $row['extension'];
             }
         }
