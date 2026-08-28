@@ -100,7 +100,7 @@ body {
 }
 
 #fab {
-	position: absolute;
-	bottom: 8rem;
+	position: fixed;
+	bottom: 5rem;
 	right: 5rem;
 }
