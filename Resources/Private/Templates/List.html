@@ -6,8 +6,8 @@
 
 	<f:section name="Content">
 		<div class="module-body t3js-module-body">
-			<f:be.pageRenderer includeJsFiles="{0: '{f:uri.resource(path: \'JavaScript/list-script.js\')}'}"> </f:be.pageRenderer>
-			<f:be.pageRenderer includeCssFiles="{0: '{f:uri.resource(path: \'CSS/main.css\')}'}"> </f:be.pageRenderer>
+			<f:asset.script identifier="file-dashboard-list-script" src="EXT:file_dashboard/Resources/Public/JavaScript/list-script.js" />
+			<f:asset.css identifier="file-dashboard-main-css" src="EXT:file_dashboard/Resources/Public/CSS/main.css" />
 			<f:flashMessages />
 
 			<h1>
